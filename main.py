@@ -9,9 +9,21 @@
 import telebot
 import random
 from typing import List, Tuple
+import json
+
+def load_config():
+    try:
+        with open('config.json', 'r') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        config = {"BOT_TOKEN": "ваш_токен_бота"}
+        with open('config.json', 'w') as f:
+            json.dump(config, f, indent=4)
+        return config
 
 # Константы игры
-BOT_TOKEN = '7687607124:AAExhbPCUZKYFd1lRfu-ZYg9Jh1Fj5-xY0I'  # Токен телеграм-бота
+config = load_config()
+BOT_TOKEN = config['BOT_TOKEN']
 BOARD_SIZE = 10  # Размер игрового поля
 EMPTY, SHIP, HIT, MISS = '~', 'S', 'X', 'O'  # Символы для обозначения состояний клеток
 
